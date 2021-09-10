@@ -1,0 +1,82 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * {
+      margin: 0px
+    }
+  </style>
+</head>
+
+<body>
+  <script type="module">
+    // first, import the Three.js modules we need:
+import * as THREE from "https://unpkg.com/three@0.126.0/build/three.module.js";
+// import { OrbitControls } from "https://unpkg.com/three@0.126.0/examples/jsm/controls/OrbitControls.js";
+// import { GUI } from "https://unpkg.com/three@0.126.0/examples/jsm/libs/dat.gui.module.js";
+import { VRButton } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/webxr/VRButton.js';
+// import Stats from "https://unpkg.com/three@0.126.0/examples/jsm/libs/stats.module";
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.xr.enabled = true;
+document.body.appendChild( renderer.domElement );
+document.body.appendChild(VRButton.createButton(renderer));
+
+// arguments: vertical field of view (degrees), aspect ratio, near clip, far clip:
+const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+// Z axis point out of the screen toward you; units are meters
+camera.position.z = 2;
+
+// ensure the renderer fills the page, and the camera aspect ratio matches:
+function resize() {
+		renderer.setSize(window.innerWidth, window.innerHeight);
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+}
+// do this now and whenever the window is resized()
+resize();
+window.addEventListener("resize", resize, false);
+
+// build a scene graph:
+const scene = new THREE.Scene();
+// scene.background = new THREE.Colour(0xffffff)
+
+const geometry = new THREE.BoxGeometry()
+const material = new THREE.MeshStandardMaterial( { color: 0x66ff99 } )
+
+const cube = new THREE.Mesh( geometry, material );
+scene.add( cube );
+
+
+// add basic lighting
+const light = new THREE.HemisphereLight(0xfff0f0, 0x606066);
+light.position.set(1, 1, 1);
+scene.add(light);
+
+let t = performance.now()
+// the function called at frame-rate to animate & render the scene:
+function animate() {
+
+  const t1 = performance.now();
+  const dt = t1-t;
+  t = t1;
+
+  // update the scene:
+  cube.rotation.x += 0.01;
+  cube.rotation.y += 0.01;
+
+  // draw the scene:
+  renderer.render( scene, camera );
+
+};
+// start!
+renderer.setAnimationLoop(animate);
+
+console.log("ok")
+
+  </script>
+</body>
+
+</html>
