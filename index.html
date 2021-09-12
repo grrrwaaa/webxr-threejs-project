@@ -13,9 +13,9 @@
   <script type="module">
     // first, import the Three.js modules we need:
 import * as THREE from "https://unpkg.com/three@0.126.0/build/three.module.js";
+import { VRButton } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/webxr/VRButton.js';
 // import { OrbitControls } from "https://unpkg.com/three@0.126.0/examples/jsm/controls/OrbitControls.js";
 // import { GUI } from "https://unpkg.com/three@0.126.0/examples/jsm/libs/dat.gui.module.js";
-import { VRButton } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/webxr/VRButton.js';
 // import Stats from "https://unpkg.com/three@0.126.0/examples/jsm/libs/stats.module";
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -43,12 +43,11 @@ window.addEventListener("resize", resize, false);
 const scene = new THREE.Scene();
 // scene.background = new THREE.Colour(0xffffff)
 
+// A mesh requires a geometry and a material:
 const geometry = new THREE.BoxGeometry()
 const material = new THREE.MeshStandardMaterial( { color: 0x66ff99 } )
-
 const cube = new THREE.Mesh( geometry, material );
 scene.add( cube );
-
 
 // add basic lighting
 const light = new THREE.HemisphereLight(0xfff0f0, 0x606066);
@@ -58,14 +57,14 @@ scene.add(light);
 let t = performance.now()
 // the function called at frame-rate to animate & render the scene:
 function animate() {
-
+  // compute current timing:
   const t1 = performance.now();
   const dt = t1-t;
   t = t1;
 
   // update the scene:
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
+  // cube.rotation.x = Math.sin(t);
+  // cube.rotation.y = Math.cos(t);
 
   // draw the scene:
   renderer.render( scene, camera );
