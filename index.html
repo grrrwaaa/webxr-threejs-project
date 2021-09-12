@@ -27,6 +27,7 @@ document.body.appendChild(VRButton.createButton(renderer));
 // arguments: vertical field of view (degrees), aspect ratio, near clip, far clip:
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.05, 100 );
 // Z axis point out of the screen toward you; units are meters
+camera.position.y = 1.5;
 camera.position.z = 2;
 
 // ensure the renderer fills the page, and the camera aspect ratio matches:
@@ -41,17 +42,17 @@ window.addEventListener("resize", resize, false);
 
 // build a scene graph:
 const scene = new THREE.Scene();
-// scene.background = new THREE.Colour(0xffffff)
 
 // A mesh requires a geometry and a material:
 const geometry = new THREE.BoxGeometry()
-const material = new THREE.MeshStandardMaterial( { color: 0x66ff99 } )
+const material = new THREE.MeshStandardMaterial()
 const cube = new THREE.Mesh( geometry, material );
+cube.position.y = 1.5;
 scene.add( cube );
 
 // add basic lighting
 const light = new THREE.HemisphereLight(0xfff0f0, 0x606066);
-light.position.set(1, 1, 1);
+//light.position.set(1, 1, 1);
 scene.add(light);
 
 let t = performance.now()
@@ -72,8 +73,6 @@ function animate() {
 };
 // start!
 renderer.setAnimationLoop(animate);
-
-console.log("ok")
 
   </script>
 </body>
