@@ -63,8 +63,8 @@ function animate() {
   t = t1;
 
   // update the scene:
-  // cube.rotation.x = Math.sin(t);
-  // cube.rotation.y = Math.cos(t);
+  cube.rotation.x = t * 0.001;
+  cube.rotation.y = Math.cos(t * 0.002);
 
   // draw the scene:
   renderer.render( scene, camera );
