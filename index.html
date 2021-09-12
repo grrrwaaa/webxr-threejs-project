@@ -74,6 +74,16 @@ function animate() {
 
   // draw the scene:
   renderer.render( scene, camera );
+
+  // // Re-Render the scene, but this time to the canvas (don't do this on Mobile!)
+  // if (renderer.xr.isPresenting) {
+  //       renderer.xr.enabled = false;
+  //       let oldFramebuffer = renderer._framebuffer;
+  //       renderer.state.bindXRFramebuffer( null );
+  //       renderer.render(scene, camera);
+  //       renderer.xr.enabled = true;
+  //       renderer.state.bindXRFramebuffer(oldFramebuffer);
+  //   }
   
   // monitor our FPS:
   stats.end();
