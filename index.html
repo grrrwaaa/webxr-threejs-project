@@ -14,9 +14,7 @@
     // first, import the Three.js modules we need:
 import * as THREE from "https://unpkg.com/three@0.126.0/build/three.module.js";
 import { VRButton } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/webxr/VRButton.js';
-// import { OrbitControls } from "https://unpkg.com/three@0.126.0/examples/jsm/controls/OrbitControls.js";
-// import { GUI } from "https://unpkg.com/three@0.126.0/examples/jsm/libs/dat.gui.module.js";
-// import Stats from "https://unpkg.com/three@0.126.0/examples/jsm/libs/stats.module";
+import Stats from "https://unpkg.com/three@0.126.0/examples/jsm/libs/stats.module";
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -55,9 +53,16 @@ const light = new THREE.HemisphereLight(0xfff0f0, 0x606066);
 //light.position.set(1, 1, 1);
 scene.add(light);
 
+// add a stats view to monitor performance:
+const stats = new Stats();
+document.body.appendChild(stats.dom);
+
 let t = performance.now()
 // the function called at frame-rate to animate & render the scene:
 function animate() {
+  // monitor our FPS:
+  stats.begin();
+  
   // compute current timing:
   const t1 = performance.now();
   const dt = t1-t;
@@ -69,7 +74,9 @@ function animate() {
 
   // draw the scene:
   renderer.render( scene, camera );
-
+  
+  // monitor our FPS:
+  stats.end();
 };
 // start!
 renderer.setAnimationLoop(animate);
